@@ -74,9 +74,11 @@ class App {
                 } catch {delete this.positionManagers[_id];}
             } else {
                 console.log("Position ID " + _id + " partially closed");
-                this.positionManagers[_id].getPositionData().catch(
-                    console.log("Failed to update position data")
-                );
+                try {
+                    await this.positionManagers[_id].getPositionData();
+                } catch {
+                    console.log("Failed to update position data");
+                }
                 console.log(Object.keys(this.positionManagers));
             }
         });
@@ -106,36 +108,44 @@ class App {
         this.tradingContract.on("LimitOrderExecuted", async (asset, dir, oPrice, lev, margin, id) => {
             let _id = parseInt(id.toString());
             console.log("Limit order ID " + _id + " executed");
-            this.positionManagers[_id].getPositionData().catch(
-                console.log("Failed to update position data")
-            );
+            try {
+                await this.positionManagers[_id].getPositionData();
+            } catch {
+                console.log("Failed to update position data");
+            }
             console.log(Object.keys(this.positionManagers));
         });
 
         this.tradingContract.on("AddToPosition", async (id) => {
             let _id = parseInt(id.toString());
             console.log("Cross margin on position ID " + _id);
-            this.positionManagers[_id].getPositionData().catch(
-                console.log("Failed to update position data")
-            );
+            try {
+                await this.positionManagers[_id].getPositionData();
+            } catch {
+                console.log("Failed to update position data");
+            }
             console.log(Object.keys(this.positionManagers));
         });
 
         this.tradingContract.on("MarginModified", async (id) => {
             let _id = parseInt(id.toString());
             console.log("Position ID " + _id + " margin modified");
-            await this.positionManagers[_id].getPositionData().catch(
-                console.log("Failed to update position data")
-            );
+            try {
+                await this.positionManagers[_id].getPositionData();
+            } catch {
+                console.log("Failed to update position data");
+            }
             console.log(Object.keys(this.positionManagers));
         });
 
         this.tradingContract.on("UpdateTPSL", async (id) => {
             let _id = parseInt(id.toString());
             console.log("Position " + _id + " TP/SL modified");
-            await this.positionManagers[_id].getPositionData().catch(
-                console.log("Failed to update position data")
-            );
+            try {
+                await this.positionManagers[_id].getPositionData();
+            } catch {
+                console.log("Failed to update position data");
+            }
             console.log(Object.keys(this.positionManagers));
         });
 
