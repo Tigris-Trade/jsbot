@@ -15,10 +15,10 @@
     #### `npm install`
 
 3. Create .env file and fill it out as shown in .env.example
-   - `WALLET` is the bots public address
    - `PRIVATE_KEY` is the bots private key
    - `RPC_URL` is the network's RPC URL, Alchemy recommended
    - `PUBLIC_RPC_URL` is the network's public RPC URL, can also use Alchemy
+   - `WSS` is the websocket url, Alchemy recommended
    - `CANISTER` is the IC canister ID used by Tigris
    - `TRADING` is the trading contract address
    - `POSITION` is the positions contract address

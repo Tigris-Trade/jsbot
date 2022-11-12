@@ -16,7 +16,9 @@ class App {
         let tradingABI = JSON.parse(fs.readFileSync('./abis/TradingContractABI.json', 'utf-8'));
         let positionABI = JSON.parse(fs.readFileSync('./abis/PositionsContractABI.json', 'utf-8'));
         let libraryABI = JSON.parse(fs.readFileSync('./abis/LibraryABI.json', 'utf-8'));
+        let wss = new ethers.providers.WebSocketProvider(process.env.WSS);
         this.tradingContract = new ethers.Contract(process.env.TRADING, tradingABI, this.signer);
+        this.tradingEvents = new ethers.Contract(process.env.TRADING, tradingABI, wss);
         this.libraryContract = new ethers.Contract(process.env.LIBRARY, libraryABI, this.signerPublic);
         this.positionContract = new ethers.Contract(process.env.POSITION, positionABI, this.signer);
         this.positionManagers = {};
@@ -47,7 +49,7 @@ class App {
 
     async events() {
 
-        this.tradingContract.on("PositionOpened", async (tuple, orderType, price, id) => {
+        this.tradingEvents.on("PositionOpened", async (tuple, orderType, price, id) => {
             let type = parseInt(orderType.toString());
             let _id = parseInt(id.toString());
             if (type === 0) {
@@ -61,7 +63,7 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingContract.on("PositionClosed", async (id, price, percent) => {
+        this.tradingEvents.on("PositionClosed", async (id, price, percent) => {
             let _id = parseInt(id.toString());
             let _percent = parseInt(percent.toString());
             if (_percent === 10000000000) {
@@ -83,7 +85,7 @@ class App {
             }
         });
 
-        this.tradingContract.on("PositionLiquidated", async (id) => {
+        this.tradingEvents.on("PositionLiquidated", async (id) => {
             let _id = parseInt(id.toString());
             console.log("Position ID " + _id + " liquidated");
             try {
@@ -94,7 +96,7 @@ class App {
             } catch {delete this.positionManagers[_id];}
         });
 
-        this.tradingContract.on("LimitCancelled", async (id) => {
+        this.tradingEvents.on("LimitCancelled", async (id) => {
             let _id = parseInt(id.toString());
             console.log("Order ID " + _id + " cancelled");
             try {
@@ -105,7 +107,7 @@ class App {
             } catch {delete this.positionManagers[_id];}
         });
 
-        this.tradingContract.on("LimitOrderExecuted", async (asset, dir, oPrice, lev, margin, id) => {
+        this.tradingEvents.on("LimitOrderExecuted", async (asset, dir, oPrice, lev, margin, id) => {
             let _id = parseInt(id.toString());
             console.log("Limit order ID " + _id + " executed");
             try {
@@ -116,7 +118,7 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingContract.on("AddToPosition", async (id) => {
+        this.tradingEvents.on("AddToPosition", async (id) => {
             let _id = parseInt(id.toString());
             console.log("Cross margin on position ID " + _id);
             try {
@@ -127,7 +129,7 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingContract.on("MarginModified", async (id) => {
+        this.tradingEvents.on("MarginModified", async (id) => {
             let _id = parseInt(id.toString());
             console.log("Position ID " + _id + " margin modified");
             try {
@@ -138,7 +140,7 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingContract.on("UpdateTPSL", async (id) => {
+        this.tradingEvents.on("UpdateTPSL", async (id) => {
             let _id = parseInt(id.toString());
             console.log("Position " + _id + " TP/SL modified");
             try {
@@ -149,7 +151,7 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingContract.on("error", async () => {
+        this.tradingEvents.on("error", async () => {
            console.log("EVENT ERROR");
         });
     }
