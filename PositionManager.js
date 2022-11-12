@@ -181,6 +181,11 @@ export default class PositionManager {
         let data = await this.icp.getPairPriceData(parseInt(this.position.asset));
         let priceData = [];
         let sigs = [];
+        if (data === undefined) {
+            return {
+                priceData: [[0, 0, 0, 0, true]]
+            };
+        }
         for (let i=0; i<data.length; i++) {
             priceData.push(
                 [

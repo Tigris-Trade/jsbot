@@ -38,7 +38,7 @@ export default class ICP {
     }
 
     async createInterval() {
-        this.getPrices();
+        await this.getPrices();
         this.interval = setInterval(() => {
                 this.getPrices();
                 },8000);
