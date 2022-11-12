@@ -43,11 +43,12 @@ export default class PositionManager {
             } catch {
                 return;
             }
+            let allData = await this.processData();
+            if (allData.priceData[0][4]) return; // If market is closed, return
             if (parseInt(this.position.orderType) === 0) {
                 let liqPrice = this.liqPrice;
                 if (this.position.direction) {
                     if (cPrice <= parseInt(this.position.slPrice) && parseInt(this.position.slPrice) !== 0) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to execute long SL");
                             await this.tradingContract.limitClose(this.id, false, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
@@ -58,7 +59,6 @@ export default class PositionManager {
                         }
                     }
                     if (cPrice <= liqPrice && liqPrice !== 0) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to liquidate long");
                             await this.tradingContract.liquidatePosition(this.id, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
@@ -69,7 +69,6 @@ export default class PositionManager {
                         }
                     }
                     if (cPrice >= parseInt(this.position.tpPrice) && parseInt(this.position.tpPrice) !== 0) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to execute long TP");
                             await this.tradingContract.limitClose(this.id, true, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
@@ -81,7 +80,6 @@ export default class PositionManager {
                     }
                 } else {
                     if (cPrice >= parseInt(this.position.slPrice) && parseInt(this.position.slPrice) !== 0) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to execute short SL");
                             await this.tradingContract.limitClose(this.id, false, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
@@ -92,7 +90,6 @@ export default class PositionManager {
                         }
                     }
                     if (cPrice >= liqPrice && liqPrice !== 0) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to liquidate short");
                             await this.tradingContract.liquidatePosition(this.id, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
@@ -103,7 +100,6 @@ export default class PositionManager {
                         }
                     }
                     if (cPrice <= parseInt(this.position.tpPrice) && parseInt(this.position.tpPrice) !== 0) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to execute short TP");
                             await this.tradingContract.limitClose(this.id, true, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
@@ -129,7 +125,6 @@ export default class PositionManager {
                     }
                 } else {
                     if ((cPrice >= parseInt(this.position.price))) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to execute short limit order");
                             await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
@@ -143,7 +138,6 @@ export default class PositionManager {
             } else if (parseInt(this.position.orderType) === 2) {
                 if (this.position.direction) {
                     if (cPrice >= parseInt(this.position.price)) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to execute long stop order");
                             await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
@@ -155,7 +149,6 @@ export default class PositionManager {
                     }
                 } else {
                     if ((cPrice <= parseInt(this.position.price))) {
-                        let allData = await this.processData();
                         try {
                             console.log("ATTEMPT to execute short stop order");
                             await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sigs, {gasPrice: allData.gasPrice});
