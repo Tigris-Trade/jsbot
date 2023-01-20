@@ -1,1 +1,124 @@
-[{"inputs":[{"internalType":"address","name":"_positions","type":"address"},{"internalType":"uint256","name":"_id","type":"uint256"},{"internalType":"uint256","name":"_liqPercent","type":"uint256"}],"name":"getLiqPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bool","name":"_direction","type":"bool"},{"internalType":"uint256","name":"_tradePrice","type":"uint256"},{"internalType":"uint256","name":"_leverage","type":"uint256"},{"internalType":"uint256","name":"_margin","type":"uint256"},{"internalType":"int256","name":"_accInterest","type":"int256"},{"internalType":"uint256","name":"_liqPercent","type":"uint256"}],"name":"liqPrice","outputs":[{"internalType":"uint256","name":"_liqPrice","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"bool","name":"_direction","type":"bool"},{"internalType":"uint256","name":"_currentPrice","type":"uint256"},{"internalType":"uint256","name":"_price","type":"uint256"},{"internalType":"uint256","name":"_margin","type":"uint256"},{"internalType":"uint256","name":"_leverage","type":"uint256"},{"internalType":"int256","name":"accInterest","type":"int256"}],"name":"pnl","outputs":[{"internalType":"uint256","name":"_positionSize","type":"uint256"},{"internalType":"int256","name":"_payout","type":"int256"}],"stateMutability":"pure","type":"function"}]
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_positions",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liqPercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "getLiqPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_direction",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tradePrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_leverage",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_margin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "_accInterest",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liqPercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "liqPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_liqPrice",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_direction",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_currentPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_margin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_leverage",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "accInterest",
+        "type": "int256"
+      }
+    ],
+    "name": "pnl",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_positionSize",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "_payout",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]

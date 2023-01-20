@@ -18,12 +18,12 @@
    - `PRIVATE_KEY` is the bots private key
    - `RPC_URL` is the network's RPC URL, Alchemy recommended
    - `PUBLIC_RPC_URL` is the network's public RPC URL, can also use Alchemy
-   - `WSS` is the websocket url, Alchemy recommended
-   - `CANISTER` is the IC canister ID used by Tigris
+   - `ALCHEMY_KEY` is the key you get from Alchemy (not the whole URL)
    - `TRADING` is the trading contract address
    - `POSITION` is the positions contract address
    - `LIBRARY` is the trading contract's utility library
    - `PAIRS` is the number of pairs
+   - `CHAIN_ID` is the chain id the bot is running on
    - Check the [docs](https://docs.tigris.trade/) for specific info
 
 

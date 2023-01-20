@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import ethers from 'ethers';
-import ICP from './ICP.js';
+import Oracle from './Oracle.js';
 import fs from "fs";
 import PositionManager from "./PositionManager.js";
 
@@ -10,15 +10,15 @@ class App {
     positionManagers;
     constructor() {
         this.numberOfAssets = process.env.PAIRS;
-        this.icp = new ICP(this.numberOfAssets, process.env.CANISTER); // For IC
-        this.signer = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.JsonRpcProvider(process.env.RPC_URL));
-        this.signerPublic = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.JsonRpcProvider(process.env.PUBLIC_RPC_URL));
+        this.oracle = new Oracle(this.numberOfAssets);
+        this.signer = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.StaticJsonRpcProvider(process.env.RPC_URL));
+        this.signerPublic = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.StaticJsonRpcProvider(process.env.PUBLIC_RPC_URL));
         let tradingABI = JSON.parse(fs.readFileSync('./abis/TradingContractABI.json', 'utf-8'));
         let positionABI = JSON.parse(fs.readFileSync('./abis/PositionsContractABI.json', 'utf-8'));
         let libraryABI = JSON.parse(fs.readFileSync('./abis/LibraryABI.json', 'utf-8'));
-        let wss = new ethers.providers.WebSocketProvider(process.env.WSS);
+        this.wss = new ethers.providers.AlchemyWebSocketProvider(421613, process.env.ALCHEMY_KEY);
         this.tradingContract = new ethers.Contract(process.env.TRADING, tradingABI, this.signer);
-        this.tradingEvents = new ethers.Contract(process.env.TRADING, tradingABI, wss);
+        this.tradingEvents = new ethers.Contract(process.env.TRADING, tradingABI, this.wss);
         this.libraryContract = new ethers.Contract(process.env.LIBRARY, libraryABI, this.signerPublic);
         this.positionContract = new ethers.Contract(process.env.POSITION, positionABI, this.signer);
         this.positionManagers = {};
@@ -41,7 +41,9 @@ class App {
         }
         console.log(openPositions);
         for (let i=0; i<openPositions.length; i++) {
-            this.positionManagers[openPositions[i]] = new PositionManager(openPositions[i], this.tradingContract, this.positionContract, this.libraryContract, this.icp);
+            await (this.positionManagers[openPositions[i]] = new PositionManager(openPositions[i], this.tradingContract, this.positionContract, this.libraryContract, this.oracle));
+            // Prevents nonce collision if multiple orders are executable at the same time
+            await this.sleep(0.2);
         }
 
         await this.events();
@@ -59,7 +61,7 @@ class App {
             } else if (type === 2) {
                 console.log("Stop order ID " + _id + " created");
             }
-            this.positionManagers[_id] = new PositionManager(_id, this.tradingContract, this.positionContract, this.libraryContract, this.icp);
+            this.positionManagers[_id] = new PositionManager(_id, this.tradingContract, this.positionContract, this.libraryContract, this.oracle);
             console.log(Object.keys(this.positionManagers));
         });
 
@@ -154,6 +156,11 @@ class App {
         this.tradingEvents.on("error", async () => {
            console.log("EVENT ERROR");
         });
+    }
+
+    async sleep(seconds) {
+        let e = new Date().getTime() + (seconds * 1000);
+        while (new Date().getTime() <= e) {}
     }
 }
 
