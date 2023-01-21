@@ -13,12 +13,12 @@ class App {
         this.oracle = new Oracle(this.numberOfAssets);
         this.signer = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.StaticJsonRpcProvider(process.env.RPC_URL));
         this.signerPublic = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.StaticJsonRpcProvider(process.env.PUBLIC_RPC_URL));
-        let tradingABI = JSON.parse(fs.readFileSync('./abis/TradingContractABI.json', 'utf-8'));
+        this.tradingABI = JSON.parse(fs.readFileSync('./abis/TradingContractABI.json', 'utf-8'));
         let positionABI = JSON.parse(fs.readFileSync('./abis/PositionsContractABI.json', 'utf-8'));
         let libraryABI = JSON.parse(fs.readFileSync('./abis/LibraryABI.json', 'utf-8'));
         this.wss = new ethers.providers.AlchemyWebSocketProvider(421613, process.env.ALCHEMY_KEY);
-        this.tradingContract = new ethers.Contract(process.env.TRADING, tradingABI, this.signer);
-        this.tradingEvents = new ethers.Contract(process.env.TRADING, tradingABI, this.wss);
+        this.tradingContract = new ethers.Contract(process.env.TRADING, this.tradingABI, this.signer);
+        this.tradingEvents = new ethers.Contract(process.env.TRADING, this.tradingABI, this.wss);
         this.libraryContract = new ethers.Contract(process.env.LIBRARY, libraryABI, this.signerPublic);
         this.positionContract = new ethers.Contract(process.env.POSITION, positionABI, this.signer);
         this.positionManagers = {};
@@ -47,6 +47,7 @@ class App {
         }
 
         await this.events();
+        await this.createReconInterval();
     }
 
     async events() {
@@ -156,6 +157,31 @@ class App {
         this.tradingEvents.on("error", async () => {
            console.log("EVENT ERROR");
         });
+    }
+
+    async createReconInterval() {
+        this.interval = setInterval(() => {
+            console.log("TERMINATING ALL WEBSOCKETS AND RECONNECTING");
+            this.tradingEvents._websocket.terminate();
+
+            // Create new connections
+            this.wss = new ethers.providers.AlchemyWebSocketProvider(421613, process.env.ALCHEMY_KEY);
+
+            this.wss._websocket.on("open", async () => {
+                console.log("Alchemy provider connected to Arbitrum Goerli!");
+            });
+            this.wss._websocket.on("error", async (err) => {
+                console.log("Alchemy provider error on Arbitrum Goerli!", err);
+            });
+
+            this.tradingEvents = new ethers.Contract(process.env.TRADING, this.tradingABI, this.wss);
+
+            this.events();
+        }, 900000);
+
+        return() => {
+            clearInterval(this.interval);
+        }
     }
 
     async sleep(seconds) {
