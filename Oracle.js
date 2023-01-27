@@ -3,10 +3,10 @@ import { io } from "socket.io-client";
 export default class Oracle {
 
     constructor(_numberOfAssets) {
-        const socket = io.connect("wss://spread-oracle-ymtyv.ondigitalocean.app", { transports: ['websocket'] });
+        const socket = io.connect("wss://pyth-oracle-3io8n.ondigitalocean.app", { transports: ['websocket'] });
 
         socket.on('connect', () => {
-            console.log('Connected to Tigris Trade Oracle');
+            console.log('Connected to Tigris Oracle');
         });
 
         socket.on('data', (d) => {
