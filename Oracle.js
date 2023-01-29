@@ -26,12 +26,6 @@ export default class Oracle {
         for(let i=0; i<this.numberOfAssets; i++) {
             let data = await adata[i];
 
-            if(i == 9 || !data) {
-                prices.push(0);
-                allData.push({"price": 0, "sig": ""});
-                continue;
-            }
-
             prices.push(data.price);
 
             let priceData = [
