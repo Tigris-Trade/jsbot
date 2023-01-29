@@ -40,7 +40,8 @@ export default class PositionManager {
             let cPrice;
             try {
                 cPrice = parseInt((await this.oracle.getPrices()).prices[parseInt(this.position.asset.toString())]);
-            } catch {
+            } catch(err) {
+                if (this.id === 1282) console.log(err);
                 return;
             }
             let allData = await this.processData(parseInt(this.position.asset.toString()));

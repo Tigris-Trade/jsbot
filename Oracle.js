@@ -26,18 +26,18 @@ export default class Oracle {
         for(let i=0; i<this.numberOfAssets; i++) {
             let data = await adata[i];
 
-            prices.push(data.price);
+            prices.push(data?.price);
 
             let priceData = [
-                data.provider,
-                data.asset,
-                data.price,
-                data.spread,
-                data.timestamp,
-                data.is_closed
+                data?.provider,
+                data?.asset,
+                data?.price,
+                data?.spread,
+                data?.timestamp,
+                data?.is_closed
             ];
 
-            allData.push({price: priceData, sig: data.signature});
+            allData.push({price: priceData, sig: data?.signature});
         }
 
         return {
