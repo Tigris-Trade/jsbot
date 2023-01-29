@@ -10,8 +10,9 @@ export default class PositionManager {
         this.libraryContract = _libraryContract;
         this.oracle = _oracle;
         this.failCounter = 0;
-        this.getPositionData();
-        this.check();
+        this.getPositionData().then(() => {
+            this.check();
+        });
     }
 
     async getPositionData() {
@@ -35,8 +36,9 @@ export default class PositionManager {
         clearInterval(this.liqInterval);
     }
 
-    async check() {
+    check() {
         this.interval = setInterval(async () => {
+            if (!this.position) return;
             let cPrice;
             try {
                 cPrice = parseInt((await this.oracle.getPrices()).prices[parseInt(this.position.asset.toString())]);
