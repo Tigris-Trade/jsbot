@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 export default class Oracle {
 
     constructor(_numberOfAssets) {
-        const socket = io.connect("wss://eu1-oracle-sscsc.ondigitalocean.app", { transports: ['websocket'] });
+        const socket = io.connect("wss://eu1.tigrisoracle.net", { transports: ['websocket'] });
 
         socket.on('connect', () => {
             console.log('Connected to Tigris Oracle');
