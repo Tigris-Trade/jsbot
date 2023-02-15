@@ -30,11 +30,11 @@ export default class Oracle {
 
             let priceData = [
                 data?.provider,
+                data?.is_closed,
                 data?.asset,
                 data?.price,
                 data?.spread,
-                data?.timestamp,
-                data?.is_closed
+                data?.timestamp
             ];
 
             allData.push({price: priceData, sig: data?.signature});
