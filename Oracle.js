@@ -13,6 +13,10 @@ export default class Oracle {
             this.data = d;
         });
 
+        socket.on('error', (err) => {
+            console.log(err);
+        });
+
         this.numberOfAssets = _numberOfAssets;
     }
 
