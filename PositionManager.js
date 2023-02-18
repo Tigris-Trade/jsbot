@@ -47,7 +47,7 @@ export default class PositionManager {
                 return;
             }
             let allData = await this.processData(parseInt(this.position.asset.toString()));
-            if (allData.priceData[5]) return; // If market is closed, return
+            if (allData.priceData[1]) return; // If market is closed, return
             if (parseInt(this.position.orderType) === 0) {
                 let liqPrice = this.liqPrice;
                 if (this.position.direction) {
