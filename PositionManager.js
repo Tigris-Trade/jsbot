@@ -55,7 +55,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute long SL");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.limitClose(this.id, false, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.limitClose(this.id, false, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully executed long SL");
                         } catch(err) {
                             console.log(err.reason);
@@ -66,7 +66,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to liquidate long");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.liquidatePosition(this.id, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.liquidatePosition(this.id, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully liquidated long");
                         } catch(err) {
                             console.log(err.reason);
@@ -77,7 +77,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute long TP");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.limitClose(this.id, true, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.limitClose(this.id, true, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully executed long TP");
                         } catch(err) {
                             console.log(err.reason);
@@ -89,7 +89,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute short SL");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.limitClose(this.id, false, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.limitClose(this.id, false, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully executed short SL");
                         } catch(err) {
                             console.log(err.reason);
@@ -100,7 +100,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to liquidate short");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.liquidatePosition(this.id, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.liquidatePosition(this.id, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully liquidated short");
                         } catch(err) {
                             console.log(err.reason);
@@ -111,7 +111,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute short TP");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.limitClose(this.id, true, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.limitClose(this.id, true, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully executed short TP");
                         } catch(err) {
                             console.log(err.reason);
@@ -127,7 +127,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute long limit order");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully executed long limit order");
                         } catch(err) {
                             console.log(err.reason);
@@ -139,7 +139,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute short limit order");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully executed short limit order");
                         } catch(err) {
                             // console.log(err.reason);
@@ -153,7 +153,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute long stop order");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully executed long stop order");
                         } catch(err) {
                             console.log(err.reason);
@@ -165,7 +165,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute short stop order");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sig, {gasLimit: 3000000, gasPrice: gasPrice});
+                            await this.tradingContract.executeLimitOrder(this.id, allData.priceData, allData.sig, {gasLimit: 10000000, gasPrice: gasPrice});
                             console.log("Successfully executed short stop order");
                         } catch(err) {
                             console.log(err.reason);
