@@ -174,7 +174,7 @@ export default class PositionManager {
                     }
                 }
             }
-        }, 500);
+        }, 2000);
         this.liqInterval = setInterval(async () => {
                 this.libraryContract.getLiqPrice(this.positionContract.address, this.id, 9e9).then((l) => {
                     this.liqPrice = parseInt(l);
