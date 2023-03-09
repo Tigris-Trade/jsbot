@@ -168,10 +168,10 @@ class App {
             this.wss = new ethers.providers.AlchemyWebSocketProvider(parseInt(process.env.CHAIN_ID), process.env.ALCHEMY_KEY);
 
             this.wss._websocket.on("open", async () => {
-                console.log("Alchemy provider connected to Arbitrum Goerli!");
+                console.log("Alchemy provider connected!");
             });
             this.wss._websocket.on("error", async (err) => {
-                console.log("Alchemy provider error on Arbitrum Goerli!", err);
+                console.log("Alchemy provider error!", err);
             });
 
             this.tradingEvents = new ethers.Contract(process.env.TRADING, this.tradingABI, this.wss);
