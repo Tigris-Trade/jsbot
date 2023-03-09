@@ -16,7 +16,7 @@ class App {
         this.tradingABI = JSON.parse(fs.readFileSync('./abis/TradingContractABI.json', 'utf-8'));
         let positionABI = JSON.parse(fs.readFileSync('./abis/PositionsContractABI.json', 'utf-8'));
         let libraryABI = JSON.parse(fs.readFileSync('./abis/LibraryABI.json', 'utf-8'));
-        this.wss = new ethers.providers.AlchemyWebSocketProvider(421613, process.env.ALCHEMY_KEY);
+        this.wss = new ethers.providers.AlchemyWebSocketProvider(process.env.CHAIN_ID, process.env.ALCHEMY_KEY);
         this.tradingContract = new ethers.Contract(process.env.TRADING, this.tradingABI, this.signer);
         this.tradingEvents = new ethers.Contract(process.env.TRADING, this.tradingABI, this.wss);
         this.libraryContract = new ethers.Contract(process.env.LIBRARY, libraryABI, this.signerPublic);
@@ -165,7 +165,7 @@ class App {
             this.tradingEvents._websocket.terminate();
 
             // Create new connections
-            this.wss = new ethers.providers.AlchemyWebSocketProvider(421613, process.env.ALCHEMY_KEY);
+            this.wss = new ethers.providers.AlchemyWebSocketProvider(process.env.CHAIN_ID, process.env.ALCHEMY_KEY);
 
             this.wss._websocket.on("open", async () => {
                 console.log("Alchemy provider connected to Arbitrum Goerli!");
