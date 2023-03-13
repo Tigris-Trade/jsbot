@@ -409,6 +409,12 @@
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "liqPrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "trader",
         "type": "address"
@@ -1674,7 +1680,7 @@
     ],
     "name": "setTimeDelay",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
