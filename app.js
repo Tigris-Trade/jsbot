@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import ethers from 'ethers';
+import { io } from "socket.io-client";
 import Oracle from './Oracle.js';
 import fs from "fs";
 import PositionManager from "./PositionManager.js";
@@ -16,9 +17,8 @@ class App {
         this.tradingABI = JSON.parse(fs.readFileSync('./abis/TradingContractABI.json', 'utf-8'));
         let positionABI = JSON.parse(fs.readFileSync('./abis/PositionsContractABI.json', 'utf-8'));
         let libraryABI = JSON.parse(fs.readFileSync('./abis/LibraryABI.json', 'utf-8'));
-        this.wss = new ethers.providers.AlchemyWebSocketProvider(parseInt(process.env.CHAIN_ID), process.env.ALCHEMY_KEY);
         this.tradingContract = new ethers.Contract(process.env.TRADING, this.tradingABI, this.signer);
-        this.tradingEvents = new ethers.Contract(process.env.TRADING, this.tradingABI, this.wss);
+        this.tradingEvents = io.connect(process.env.EVENT_SOCKET_URL, {transports: ['websocket']});
         this.libraryContract = new ethers.Contract(process.env.LIBRARY, libraryABI, this.signerPublic);
         this.positionContract = new ethers.Contract(process.env.POSITION, positionABI, this.signer);
         this.positionManagers = {};
@@ -47,14 +47,14 @@ class App {
         }
 
         await this.events();
-        await this.createReconInterval();
     }
 
     async events() {
 
-        this.tradingEvents.on("PositionOpened", async (tuple, orderType, price, id) => {
-            let type = parseInt(orderType.toString());
-            let _id = parseInt(id.toString());
+        this.tradingEvents.on("PositionOpened", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            let type = parseInt(event.orderType.toString());
+            let _id = parseInt(event.id.toString());
             if (type === 0) {
                 console.log("Market order ID " + _id + " opened");
             } else if (type === 1) {
@@ -66,9 +66,10 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingEvents.on("PositionClosed", async (id, price, percent) => {
-            let _id = parseInt(id.toString());
-            let _percent = parseInt(percent.toString());
+        this.tradingEvents.on("PositionClosed", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            let _id = parseInt(event.id.toString());
+            let _percent = parseInt(event.percent.toString());
             if (_percent === 10000000000) {
                 console.log("Position ID " + _id + " closed");
                 try {
@@ -88,8 +89,9 @@ class App {
             }
         });
 
-        this.tradingEvents.on("PositionLiquidated", async (id) => {
-            let _id = parseInt(id.toString());
+        this.tradingEvents.on("PositionLiquidated", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            let _id = parseInt(event.id.toString());
             console.log("Position ID " + _id + " liquidated");
             try {
                 this.positionManagers[_id].clearLoop().then(() => {
@@ -99,8 +101,9 @@ class App {
             } catch {delete this.positionManagers[_id];}
         });
 
-        this.tradingEvents.on("LimitCancelled", async (id) => {
-            let _id = parseInt(id.toString());
+        this.tradingEvents.on("LimitCancelled", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            let _id = parseInt(event.id.toString());
             console.log("Order ID " + _id + " cancelled");
             try {
                 this.positionManagers[_id].clearLoop().then(() => {
@@ -110,8 +113,9 @@ class App {
             } catch {delete this.positionManagers[_id];}
         });
 
-        this.tradingEvents.on("LimitOrderExecuted", async (asset, dir, oPrice, lev, margin, id) => {
-            let _id = parseInt(id.toString());
+        this.tradingEvents.on("LimitOrderExecuted", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            let _id = parseInt(event.id.toString());
             console.log("Limit order ID " + _id + " executed");
             try {
                 await this.positionManagers[_id].getPositionData();
@@ -121,8 +125,9 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingEvents.on("AddToPosition", async (id) => {
-            let _id = parseInt(id.toString());
+        this.tradingEvents.on("AddToPosition", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            let _id = parseInt(event.id.toString());
             console.log("Cross margin on position ID " + _id);
             try {
                 await this.positionManagers[_id].getPositionData();
@@ -132,8 +137,9 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingEvents.on("MarginModified", async (id) => {
-            let _id = parseInt(id.toString());
+        this.tradingEvents.on("MarginModified", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            let _id = parseInt(event.id.toString());
             console.log("Position ID " + _id + " margin modified");
             try {
                 await this.positionManagers[_id].getPositionData();
@@ -143,8 +149,9 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingEvents.on("UpdateTPSL", async (id) => {
-            let _id = parseInt(id.toString());
+        this.tradingEvents.on("UpdateTPSL", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            let _id = parseInt(event.id.toString());
             console.log("Position " + _id + " TP/SL modified");
             try {
                 await this.positionManagers[_id].getPositionData();
@@ -157,31 +164,6 @@ class App {
         this.tradingEvents.on("error", async () => {
            console.log("EVENT ERROR");
         });
-    }
-
-    async createReconInterval() {
-        this.interval = setInterval(() => {
-            console.log("TERMINATING ALL WEBSOCKETS AND RECONNECTING");
-            this.tradingEvents._websocket.terminate();
-
-            // Create new connections
-            this.wss = new ethers.providers.AlchemyWebSocketProvider(parseInt(process.env.CHAIN_ID), process.env.ALCHEMY_KEY);
-
-            this.wss._websocket.on("open", async () => {
-                console.log("Alchemy provider connected!");
-            });
-            this.wss._websocket.on("error", async (err) => {
-                console.log("Alchemy provider error!", err);
-            });
-
-            this.tradingEvents = new ethers.Contract(process.env.TRADING, this.tradingABI, this.wss);
-
-            this.events();
-        }, 900000);
-
-        return() => {
-            clearInterval(this.interval);
-        }
     }
 
     async sleep(seconds) {

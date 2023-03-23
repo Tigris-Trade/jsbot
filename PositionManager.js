@@ -16,19 +16,21 @@ export default class PositionManager {
     }
 
     async getPositionData() {
-        this.positionContract.trades(this.id).then((trade) => {
-            this.position = trade;
-        })
-            .catch(() => {
-                    // Second attempt
-                    this.positionContract.trades(this.id).then((trade) => {
-                        this.position = trade;
-                    })
-                        // Print fail, should restart the bot manually?
-                        .catch((err) => {
-                            console.log("FAILED TO GET POSITION ID " + (this.id).toString(), err);
-                        });
-            });
+        setTimeout(() => {
+            this.positionContract.trades(this.id).then((trade) => {
+                this.position = trade;
+            })
+                .catch(() => {
+                        // Second attempt
+                        this.positionContract.trades(this.id).then((trade) => {
+                            this.position = trade;
+                        })
+                            // Print fail, should restart the bot manually?
+                            .catch((err) => {
+                                console.log("FAILED TO GET POSITION ID " + (this.id).toString(), err);
+                            });
+                });
+        }, 10000);
     }
 
     async clearLoop() {
