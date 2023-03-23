@@ -18,7 +18,7 @@
    - `PRIVATE_KEY` is the bots private key
    - `RPC_URL` is the network's RPC URL, Alchemy recommended
    - `PUBLIC_RPC_URL` is the network's public RPC URL, can also use Alchemy
-   - `ALCHEMY_KEY` is the key you get from Alchemy (not the whole URL)
+   - `EVENT_SOCKET_URL` URL that emits tigris events. For example: `https://us1events.tigristrade.info`
    - `TRADING` is the trading contract address
    - `POSITION` is the positions contract address
    - `LIBRARY` is the trading contract's utility library
