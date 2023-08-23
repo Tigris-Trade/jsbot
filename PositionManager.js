@@ -1,3 +1,5 @@
+import {parse} from "dotenv";
+
 export default class PositionManager {
     position;
     interval;
@@ -122,8 +124,9 @@ export default class PositionManager {
                     }
                 }
             } else if (parseInt(this.position.orderType) === 1) {
+                const spread = parseFloat(allData[4]);
                 if (this.position.direction) {
-                    if (cPrice <= parseInt(this.position.price)) {
+                    if (cPrice + cPrice * spread / 1e10 <= parseInt(this.position.price)) {
                         console.log(cPrice);
                         console.log(parseInt(this.position.price));
                         try {
@@ -137,7 +140,7 @@ export default class PositionManager {
                         }
                     }
                 } else {
-                    if ((cPrice >= parseInt(this.position.price))) {
+                    if (cPrice - cPrice * spread / 1e10 >= parseInt(this.position.price)) {
                         try {
                             console.log("ATTEMPT to execute short limit order");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
@@ -150,8 +153,9 @@ export default class PositionManager {
                     }
                 }
             } else if (parseInt(this.position.orderType) === 2) {
+                const spread = parseFloat(allData[4]);
                 if (this.position.direction) {
-                    if (cPrice >= parseInt(this.position.price)) {
+                    if (cPrice + cPrice * spread / 1e10 >= parseInt(this.position.price)) {
                         try {
                             console.log("ATTEMPT to execute long stop order");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
@@ -163,7 +167,7 @@ export default class PositionManager {
                         }
                     }
                 } else {
-                    if ((cPrice <= parseInt(this.position.price))) {
+                    if ((cPrice - cPrice * spread / 1e10 <= parseInt(this.position.price))) {
                         try {
                             console.log("ATTEMPT to execute short stop order");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
