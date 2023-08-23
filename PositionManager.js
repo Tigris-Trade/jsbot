@@ -153,7 +153,7 @@ export default class PositionManager {
                     }
                 }
             } else if (parseInt(this.position.orderType) === 2) {
-                const spread = parseFloat(allData[4]);
+                const spread = parseFloat(allData.priceData[4]);
                 if (this.position.direction) {
                     if (cPrice + cPrice * spread / 1e10 >= parseInt(this.position.price)) {
                         try {
