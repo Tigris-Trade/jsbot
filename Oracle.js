@@ -32,21 +32,22 @@ export default class Oracle {
 
             prices.push(data?.price);
 
-            let priceData = [
+            const priceData = [
                 data?.provider,
                 data?.is_closed,
                 data?.asset,
                 data?.price,
                 data?.spread,
-                data?.timestamp
+                data?.timestamp,
+                data?.signature
             ];
 
-            allData.push({price: priceData, sig: data?.signature});
+            allData.push(priceData);
         }
 
         return {
             prices: prices,
-            data: allData // [{price: [], sig: "0xsig"}, {price: [], sig: "0xsig"}, {price: [], sig: "0xsig"}]
+            data: allData // [ [], [], [] ]
         };
     }
 }

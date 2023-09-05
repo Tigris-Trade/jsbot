@@ -161,9 +161,67 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
+        this.tradingEvents.on("MarketOrderCreated", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            const eventData = event.order;
+            const _id = parseInt(eventData.id);
+            const _pair = parseInt(eventData.tradeInfo.asset);
+            console.log("Market order " + _id + " created");
+            try {
+                await this.executeMarketOrder(_id, _pair);
+            } catch {
+                console.log("Failed to execute market order");
+            }
+        });
+
+        this.tradingEvents.on("AddToPositionOrderCreated", async (event) => {
+            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
+            const eventData = event.order;
+            const _id = parseInt(eventData.id);
+            const _pair = parseInt(eventData.asset);
+            console.log("Market order " + _id + " created");
+            try {
+                await this.executeAddToPositionOrder(_id, _pair);
+            } catch {
+                console.log("Failed to execute market order");
+            }
+        });
+
         this.tradingEvents.on("error", async () => {
            console.log("EVENT ERROR");
         });
+    }
+
+    async executeMarketOrder(_id, _pair) {
+        const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
+        this.tradingContract.confirmMarketOrder(
+            _id,
+            await this.processData(_pair),
+            true,
+            {gasPrice: gasPrice, gasLimit: 10000000}
+        );
+    }
+
+    async executeAddToPositionOrder(_id) {
+        const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
+        this.tradingContract.confirmAddToPositionOrder(
+            _id,
+            await this.processData(_pair),
+            true,
+            {gasPrice: gasPrice, gasLimit: 10000000}
+        );
+    }
+
+    async processData(_asset) {
+        try {
+            let data = (await this.oracle.getPrices()).data[_asset];
+            if (data === undefined) {
+                return ["0x0000000000000000000000000000000000000000", true, 0, 0, 0, 0, "0x"];
+            }
+            return data;
+        } catch {
+            return ["0x0000000000000000000000000000000000000000", true, 0, 0, 0, 0, "0x"];
+        }
     }
 
     async sleep(seconds) {
