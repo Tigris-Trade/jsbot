@@ -179,11 +179,11 @@ class App {
             const eventData = event.order;
             const _id = parseInt(eventData.id);
             const _pair = parseInt(eventData.asset);
-            console.log("Market order " + _id + " created");
+            console.log("Add to position order " + _id + " created");
             try {
                 await this.executeAddToPositionOrder(_id, _pair);
             } catch {
-                console.log("Failed to execute market order");
+                console.log("Failed to execute add to position order");
             }
         });
 
