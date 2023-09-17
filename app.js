@@ -194,7 +194,7 @@ class App {
 
     async executeMarketOrder(_id, _pair) {
         const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
-        this.tradingContract.confirmMarketOrder(
+        await this.tradingContract.confirmMarketOrder(
             _id,
             await this.processData(_pair),
             true,
@@ -202,9 +202,9 @@ class App {
         );
     }
 
-    async executeAddToPositionOrder(_id) {
+    async executeAddToPositionOrder(_id, _pair) {
         const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
-        this.tradingContract.confirmAddToPositionOrder(
+        await this.tradingContract.confirmAddToPositionOrder(
             _id,
             await this.processData(_pair),
             true,
