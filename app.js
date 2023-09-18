@@ -193,23 +193,27 @@ class App {
     }
 
     async executeMarketOrder(_id, _pair) {
-        const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
-        await this.tradingContract.confirmMarketOrder(
-            _id,
-            await this.processData(_pair),
-            true,
-            {gasPrice: gasPrice, gasLimit: 10000000}
-        );
+        setTimeout(async () => {
+            const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
+            await this.tradingContract.confirmMarketOrder(
+                _id,
+                await this.processData(_pair),
+                true,
+                {gasPrice: gasPrice, gasLimit: 10000000}
+            );
+        }, 1000);
     }
 
     async executeAddToPositionOrder(_id, _pair) {
-        const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
-        await this.tradingContract.confirmAddToPositionOrder(
-            _id,
-            await this.processData(_pair),
-            true,
-            {gasPrice: gasPrice, gasLimit: 10000000}
-        );
+        setTimeout(async () => {
+            const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
+            await this.tradingContract.confirmAddToPositionOrder(
+                _id,
+                await this.processData(_pair),
+                true,
+                {gasPrice: gasPrice, gasLimit: 10000000}
+            );
+        }, 1000);
     }
 
     async processData(_asset) {
