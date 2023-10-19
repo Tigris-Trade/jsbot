@@ -201,7 +201,7 @@ class App {
                 true,
                 {gasPrice: gasPrice, gasLimit: 10000000}
             );
-        }, 1000);
+        }, 1500);
     }
 
     async executeAddToPositionOrder(_id, _pair) {
@@ -213,7 +213,7 @@ class App {
                 true,
                 {gasPrice: gasPrice, gasLimit: 10000000}
             );
-        }, 1000);
+        }, 1500);
     }
 
     async processData(_asset) {
