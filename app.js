@@ -161,59 +161,9 @@ class App {
             console.log(Object.keys(this.positionManagers));
         });
 
-        this.tradingEvents.on("MarketOrderCreated", async (event) => {
-            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
-            const eventData = event.order;
-            const _id = parseInt(eventData.id);
-            const _pair = parseInt(eventData.tradeInfo.asset);
-            console.log("Market order " + _id + " created");
-            try {
-                await this.executeMarketOrder(_id, _pair);
-            } catch {
-                console.log("Failed to execute market order");
-            }
-        });
-
-        this.tradingEvents.on("AddToPositionOrderCreated", async (event) => {
-            if (parseInt(event.chainId) !== parseInt(process.env.CHAIN_ID)) return;
-            const eventData = event.order;
-            const _id = parseInt(eventData.id);
-            const _pair = parseInt(eventData.asset);
-            console.log("Add to position order " + _id + " created");
-            try {
-                await this.executeAddToPositionOrder(_id, _pair);
-            } catch {
-                console.log("Failed to execute add to position order");
-            }
-        });
-
         this.tradingEvents.on("error", async () => {
            console.log("EVENT ERROR");
         });
-    }
-
-    async executeMarketOrder(_id, _pair) {
-        setTimeout(async () => {
-            const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
-            await this.tradingContract.confirmMarketOrder(
-                _id,
-                await this.processData(_pair),
-                true,
-                {gasPrice: gasPrice, gasLimit: 10000000}
-            );
-        }, 1500);
-    }
-
-    async executeAddToPositionOrder(_id, _pair) {
-        setTimeout(async () => {
-            const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 3);
-            await this.tradingContract.confirmAddToPositionOrder(
-                _id,
-                await this.processData(_pair),
-                true,
-                {gasPrice: gasPrice, gasLimit: 10000000}
-            );
-        }, 1500);
     }
 
     async processData(_asset) {
