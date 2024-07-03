@@ -172,7 +172,7 @@ export default class PositionManager {
                         try {
                             console.log("ATTEMPT to execute short stop order");
                             const gasPrice = Math.round((await this.tradingContract.provider.getGasPrice()).toNumber() * 2);
-                            await this.tradingContract.executeLimitOrder(this.id, priceData.priceData, priceData.sig, {gasPrice: gasPrice, gasLimit: process.env.GAS_LIMIT});
+                            await this.tradingContract.executeLimitOrder(this.id, priceData, {gasPrice: gasPrice, gasLimit: process.env.GAS_LIMIT});
                             console.log("Successfully executed short stop order");
                         } catch(err) {
                             console.log(err.message);
