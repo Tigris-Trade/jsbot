@@ -1,9 +1,12 @@
 import { io } from "socket.io-client";
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export default class Oracle {
 
     constructor(_numberOfAssets) {
-        const socket = io.connect("wss://eu1.tigrisoracle.net", { transports: ['websocket'] });
+        const socket = io.connect(process.env.ORACLE_URL, { transports: ['websocket'] });
 
         socket.on('connect', () => {
             console.log('Connected to Tigris Oracle');
