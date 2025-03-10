@@ -5,7 +5,7 @@ dotenv.config();
 
 export default class Oracle {
 
-    constructor(_numberOfAssets) {
+    constructor(pairs) {
         const socket = io.connect(process.env.ORACLE_URL, { transports: ['websocket'] });
 
         socket.on('connect', () => {
@@ -20,20 +20,20 @@ export default class Oracle {
             console.log(err);
         });
 
-        this.numberOfAssets = _numberOfAssets;
+        this.pairs = pairs;
     }
 
     async getPrices() {
         if(!this.data) return false;
 
         let adata = this.data;
-        let prices = [];
-        let allData = [];
+        let prices = {};
+        let allData = {};
 
-        for(let i=0; i<this.numberOfAssets; i++) {
-            let data = await adata[i];
+        for(let i=0; i<this.pairs.length; i++) {
+            let data = await adata[this.pairs[i]];
 
-            prices.push(data?.price);
+            prices[this.pairs[i]] = data?.price;
 
             const priceData = [
                 data?.provider,
@@ -45,12 +45,12 @@ export default class Oracle {
                 data?.signature
             ];
 
-            allData.push(priceData);
+            allData[this.pairs[i]] = priceData;
         }
 
         return {
             prices: prices,
-            data: allData // [ [], [], [] ]
+            data: allData
         };
     }
 }

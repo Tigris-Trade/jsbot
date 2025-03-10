@@ -10,8 +10,7 @@ dotenv.config();
 class App {
     positionManagers;
     constructor() {
-        this.numberOfAssets = process.env.PAIRS;
-        this.oracle = new Oracle(this.numberOfAssets);
+        this.pairs = [];
         this.signer = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.StaticJsonRpcProvider(process.env.RPC_URL));
         this.signerPublic = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.StaticJsonRpcProvider(process.env.PUBLIC_RPC_URL));
         this.tradingABI = JSON.parse(fs.readFileSync('./abis/TradingContractABI.json', 'utf-8'));
@@ -26,22 +25,26 @@ class App {
     }
 
     async start() {
+        let response = await fetch("https://pairs.tigris.trade/allPairs");
+        let data = await response.json();
+        this.pairs = Object.keys(data);
+        this.oracle = new Oracle(this.pairs.length);
         // Get all positions and create a position manager for each one
         let openPositionsBigInt = await this.positionContract.openPositions();
         let openPositions = [];
         for (let i=0; i<openPositionsBigInt.length; i++) {
             openPositions.push(parseInt(openPositionsBigInt[i].toString()));
         }
-        for (let i=0; i<this.numberOfAssets; i++) {
+        for (let i=0; i<this.pairs.length; i++) {
             let limitOrdersBigInt = [];
-            limitOrdersBigInt = await this.positionContract.limitOrders(i);
+            limitOrdersBigInt = await this.positionContract.limitOrders(this.pairs[i]);
             for (let j=0; j<limitOrdersBigInt.length; j++) {
                 openPositions.push(parseInt(limitOrdersBigInt[j].toString()));
             }
         }
         console.log(openPositions);
         for (let i=0; i<openPositions.length; i++) {
-            await (this.positionManagers[openPositions[i]] = new PositionManager(openPositions[i], this.tradingContract, this.positionContract, this.libraryContract, this.oracle));
+            this.positionManagers[openPositions[i]] = new PositionManager(openPositions[i], this.tradingContract, this.positionContract, this.libraryContract, this.oracle);
             // Prevents nonce collision if multiple orders are executable at the same time
             await this.sleep(0.2);
         }
@@ -170,11 +173,11 @@ class App {
         try {
             let data = (await this.oracle.getPrices()).data[_asset];
             if (data === undefined) {
-                return ["0x0000000000000000000000000000000000000000", true, 0, 0, 0, 0, "0x"];
+                return ["0x0000000000000000000000000000000000000000", true, "0x0000000000000000000000000000000000000000000000000000000000000000", 0, 0, 0, "0x"];
             }
             return data;
         } catch {
-            return ["0x0000000000000000000000000000000000000000", true, 0, 0, 0, 0, "0x"];
+            return ["0x0000000000000000000000000000000000000000", true, "0x0000000000000000000000000000000000000000000000000000000000000000", 0, 0, 0, "0x"];
         }
     }
 

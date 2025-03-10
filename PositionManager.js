@@ -46,12 +46,12 @@ export default class PositionManager {
             if (!this.position) return;
             let cPrice;
             try {
-                cPrice = parseInt((await this.oracle.getPrices()).prices[parseInt(this.position.asset.toString())]);
+                cPrice = parseInt((await this.oracle.getPrices()).prices[this.position.pair]);
             } catch(err) {
                 console.log(err);
                 return;
             }
-            let priceData = await this.processData(parseInt(this.position.asset.toString()));
+            let priceData = await this.processData(this.position.pair);
             if (priceData[1]) return; // If market is closed, return
             if (parseInt(this.position.orderType) === 0) {
                 let liqPrice = this.liqPrice;
@@ -202,11 +202,11 @@ export default class PositionManager {
         try {
             let data = (await this.oracle.getPrices()).data[_asset];
             if (data === undefined) {
-                return ["0x0000000000000000000000000000000000000000", true, 0, 0, 0, 0, "0x"];
+                return ["0x0000000000000000000000000000000000000000", true, "0x0000000000000000000000000000000000000000000000000000000000000000", 0, 0, 0, "0x"];
             }
             return data;
         } catch {
-            return ["0x0000000000000000000000000000000000000000", true, 0, 0, 0, 0, "0x"];
+            return ["0x0000000000000000000000000000000000000000", true, "0x0000000000000000000000000000000000000000000000000000000000000000", 0, 0, 0, "0x"];
         }
     }
 }
