@@ -46,7 +46,10 @@ export default class PositionManager {
             if (!this.position) return;
             let cPrice;
             try {
-                cPrice = parseInt((await this.oracle.getPrices()).prices[this.position.pair]);
+                const oraclePrices = await this.oracle.getPrices();
+                if (!oraclePrices) return;
+                cPrice = parseInt(oraclePrices.prices[this.position.pair]);
+                if (!cPrice) return;
             } catch(err) {
                 console.log(err);
                 return;

@@ -18,12 +18,12 @@
       },
       {
         "internalType": "address",
-        "name": "_lpstaking",
+        "name": "_referrals",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_xtig",
+        "name": "_vault",
         "type": "address"
       }
     ],
@@ -108,6 +108,11 @@
   {
     "inputs": [],
     "name": "NotAllowedPair",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotEnoughGas",
     "type": "error"
   },
   {
@@ -216,121 +221,15 @@
     "anonymous": false,
     "inputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tradeId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "marginToAdd",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "tigAsset",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "trader",
-            "type": "address"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct ITrading.PendingAddToPositionOrderData",
-        "name": "orderData",
-        "type": "tuple"
-      }
-    ],
-    "name": "AddToPositionOrderCancelled",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tradeId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "marginToAdd",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "tigAsset",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "trader",
-            "type": "address"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct ITrading.PendingAddToPositionOrderData",
-        "name": "orderData",
-        "type": "tuple"
-      }
-    ],
-    "name": "AddToPositionOrderCreated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": false,
         "internalType": "address",
-        "name": "tigAsset",
+        "name": "marginAsset",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
         "name": "daoFees",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "burnFees",
         "type": "uint256"
       },
       {
@@ -379,9 +278,9 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "asset",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "pair",
+        "type": "string"
       },
       {
         "indexed": false,
@@ -464,190 +363,6 @@
       }
     ],
     "name": "MarginModified",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "margin",
-                "type": "uint256"
-              },
-              {
-                "internalType": "address",
-                "name": "marginAsset",
-                "type": "address"
-              },
-              {
-                "internalType": "address",
-                "name": "stableVault",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "leverage",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "asset",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "direction",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint256",
-                "name": "tpPrice",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "slPrice",
-                "type": "uint256"
-              },
-              {
-                "internalType": "address",
-                "name": "referrer",
-                "type": "address"
-              }
-            ],
-            "internalType": "struct ITrading.TradeInfo",
-            "name": "tradeInfo",
-            "type": "tuple"
-          },
-          {
-            "internalType": "address",
-            "name": "tigAsset",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "marginAfterFees",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "trader",
-            "type": "address"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct ITrading.PendingMarketOrderData",
-        "name": "orderData",
-        "type": "tuple"
-      }
-    ],
-    "name": "MarketOrderCancelled",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "margin",
-                "type": "uint256"
-              },
-              {
-                "internalType": "address",
-                "name": "marginAsset",
-                "type": "address"
-              },
-              {
-                "internalType": "address",
-                "name": "stableVault",
-                "type": "address"
-              },
-              {
-                "internalType": "uint256",
-                "name": "leverage",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "asset",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "direction",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint256",
-                "name": "tpPrice",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "slPrice",
-                "type": "uint256"
-              },
-              {
-                "internalType": "address",
-                "name": "referrer",
-                "type": "address"
-              }
-            ],
-            "internalType": "struct ITrading.TradeInfo",
-            "name": "tradeInfo",
-            "type": "tuple"
-          },
-          {
-            "internalType": "address",
-            "name": "tigAsset",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "marginAfterFees",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "trader",
-            "type": "address"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct ITrading.PendingMarketOrderData",
-        "name": "orderData",
-        "type": "tuple"
-      }
-    ],
-    "name": "MarketOrderCreated",
     "type": "event"
   },
   {
@@ -759,19 +474,14 @@
             "type": "address"
           },
           {
-            "internalType": "address",
-            "name": "stableVault",
-            "type": "address"
-          },
-          {
             "internalType": "uint256",
             "name": "leverage",
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
           },
           {
             "internalType": "bool",
@@ -872,61 +582,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "_stableVault",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_marginAsset",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_addMargin",
         "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "provider",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClosed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "spread",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "signature",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct PriceData",
-        "name": "_priceData",
-        "type": "tuple"
       },
       {
         "components": [
@@ -969,9 +627,153 @@
         "internalType": "address",
         "name": "_trader",
         "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "provider",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isClosed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "spread",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct PriceData",
+        "name": "_priceData",
+        "type": "tuple"
       }
     ],
     "name": "addMargin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_addMargin",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "deadline",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bool",
+            "name": "usePermit",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ITrading.ERC20PermitData",
+        "name": "_permitData",
+        "type": "tuple"
+      },
+      {
+        "internalType": "address",
+        "name": "_trader",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "provider",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isClosed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "spread",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct PriceData",
+        "name": "_priceData",
+        "type": "tuple"
+      }
+    ],
+    "name": "addToPosition",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1008,35 +810,12 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "_isAddToPositionOrder",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_orderId",
-        "type": "uint256"
-      }
-    ],
-    "name": "cancelPendingOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "closeFees",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "daoFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "burnFees",
         "type": "uint256"
       },
       {
@@ -1048,246 +827,9 @@
         "internalType": "uint256",
         "name": "botFees",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "keeperFees",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_orderId",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "provider",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClosed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "spread",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "signature",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct PriceData",
-        "name": "_priceData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "bool",
-        "name": "_earnKeeperFee",
-        "type": "bool"
-      }
-    ],
-    "name": "confirmAddToPositionOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_orderId",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "provider",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClosed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "spread",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "signature",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct PriceData",
-        "name": "_priceData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "bool",
-        "name": "_earnKeeperFee",
-        "type": "bool"
-      }
-    ],
-    "name": "confirmMarketOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "provider",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClosed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "spread",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "signature",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct PriceData",
-        "name": "_priceData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "address",
-        "name": "_stableVault",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_marginAsset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_addMargin",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "deadline",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "r",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bool",
-            "name": "usePermit",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct ITrading.ERC20PermitData",
-        "name": "_permitData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "address",
-        "name": "_trader",
-        "type": "address"
-      }
-    ],
-    "name": "createAddToPositionOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1305,311 +847,14 @@
             "type": "address"
           },
           {
-            "internalType": "address",
-            "name": "stableVault",
-            "type": "address"
-          },
-          {
             "internalType": "uint256",
             "name": "leverage",
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "direction",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tpPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "slPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "referrer",
-            "type": "address"
-          }
-        ],
-        "internalType": "struct ITrading.TradeInfo",
-        "name": "_tradeInfo",
-        "type": "tuple"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "provider",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClosed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "spread",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "signature",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct PriceData",
-        "name": "_priceData",
-        "type": "tuple"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "deadline",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint8",
-            "name": "v",
-            "type": "uint8"
-          },
-          {
             "internalType": "bytes32",
-            "name": "r",
+            "name": "pair32",
             "type": "bytes32"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "s",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bool",
-            "name": "usePermit",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct ITrading.ERC20PermitData",
-        "name": "_permitData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "address",
-        "name": "_trader",
-        "type": "address"
-      }
-    ],
-    "name": "createMarketOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "provider",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClosed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "spread",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "signature",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct PriceData",
-        "name": "_priceData",
-        "type": "tuple"
-      }
-    ],
-    "name": "executeLimitOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getAllOrderIds",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "_marketOrders",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_addToPositionOrders",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_percent",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "provider",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClosed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "spread",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bytes",
-            "name": "signature",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct PriceData",
-        "name": "_priceData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "address",
-        "name": "_stableVault",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_outputToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_trader",
-        "type": "address"
-      }
-    ],
-    "name": "initiateCloseOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "margin",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "marginAsset",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "stableVault",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "leverage",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
           },
           {
             "internalType": "bool",
@@ -1689,7 +934,7 @@
         "type": "address"
       }
     ],
-    "name": "initiateLimitOrder",
+    "name": "createLimitOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1697,39 +942,56 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_forwarder",
-        "type": "address"
-      }
-    ],
-    "name": "isTrustedForwarder",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "keeperFee",
-    "outputs": [
-      {
         "internalType": "uint256",
-        "name": "",
+        "name": "_id",
         "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "provider",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isClosed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "spread",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct PriceData",
+        "name": "_priceData",
+        "type": "tuple"
       }
     ],
-    "stateMutability": "view",
+    "name": "executeLimitOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1757,9 +1019,9 @@
             "type": "bool"
           },
           {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
           },
           {
             "internalType": "uint256",
@@ -1793,19 +1055,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "limitOrderPriceRange",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -1825,9 +1074,9 @@
             "type": "bool"
           },
           {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
           },
           {
             "internalType": "uint256",
@@ -1874,6 +1123,210 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_percent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_trader",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "provider",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isClosed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "spread",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct PriceData",
+        "name": "_priceData",
+        "type": "tuple"
+      }
+    ],
+    "name": "marketClose",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "margin",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "marginAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "leverage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bool",
+            "name": "direction",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tpPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "slPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "referrer",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct ITrading.TradeInfo",
+        "name": "_tradeInfo",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "deadline",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bool",
+            "name": "usePermit",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ITrading.ERC20PermitData",
+        "name": "_permitData",
+        "type": "tuple"
+      },
+      {
+        "internalType": "address",
+        "name": "_trader",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "provider",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isClosed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "spread",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "signature",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct PriceData",
+        "name": "_priceData",
+        "type": "tuple"
+      }
+    ],
+    "name": "marketOpen",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "maxWinPercent",
     "outputs": [
@@ -1910,22 +1363,12 @@
       },
       {
         "internalType": "uint256",
-        "name": "burnFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "refDiscount",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
         "name": "botFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "keeperFees",
         "type": "uint256"
       }
     ],
@@ -1940,184 +1383,6 @@
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "pendingAddToPositionOrders",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tradeId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "asset",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "marginToAdd",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "tigAsset",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "trader",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "pendingAddToPositionOrdersList",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "pendingMarketOrders",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "margin",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "marginAsset",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "stableVault",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "leverage",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "direction",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "tpPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "slPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "referrer",
-            "type": "address"
-          }
-        ],
-        "internalType": "struct ITrading.TradeInfo",
-        "name": "tradeInfo",
-        "type": "tuple"
-      },
-      {
-        "internalType": "address",
-        "name": "tigAsset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "marginAfterFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "trader",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "pendingMarketOrdersList",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -2150,19 +1415,14 @@
         "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "_stableVault",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_outputToken",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_removeMargin",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_trader",
+        "type": "address"
       },
       {
         "components": [
@@ -2177,9 +1437,9 @@
             "type": "bool"
           },
           {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
           },
           {
             "internalType": "uint256",
@@ -2205,11 +1465,6 @@
         "internalType": "struct PriceData",
         "name": "_priceData",
         "type": "tuple"
-      },
-      {
-        "internalType": "address",
-        "name": "_trader",
-        "type": "address"
       }
     ],
     "name": "removeMargin",
@@ -2228,48 +1483,12 @@
     "inputs": [
       {
         "internalType": "bool",
-        "name": "_allowed",
-        "type": "bool"
-      }
-    ],
-    "name": "setAllowSameBlockOrderConfirmation",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_stableVault",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "_bool",
-        "type": "bool"
-      }
-    ],
-    "name": "setAllowedVault",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
         "name": "_open",
         "type": "bool"
       },
       {
         "internalType": "uint256",
         "name": "_daoFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_burnFees",
         "type": "uint256"
       },
       {
@@ -2296,43 +1515,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_tigAsset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_fee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setKeeperFee",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_percent",
         "type": "uint256"
       }
     ],
     "name": "setLPDistribution",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_lpstaking",
-        "type": "address"
-      }
-    ],
-    "name": "setLPStaking",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -2421,16 +1609,24 @@
         "internalType": "address",
         "name": "_forwarder",
         "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "_bool",
-        "type": "bool"
       }
     ],
     "name": "setTrustedForwarder",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      }
+    ],
+    "name": "setVault",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -2449,30 +1645,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "timeDelayPassed",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "delay",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "actionType",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "newOwner",
         "type": "address"
@@ -2481,6 +1653,19 @@
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trustedForwarder",
+    "outputs": [
+      {
+        "internalType": "contract IPermissionedForwarder",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2501,6 +1686,11 @@
         "type": "uint256"
       },
       {
+        "internalType": "address",
+        "name": "_trader",
+        "type": "address"
+      },
+      {
         "components": [
           {
             "internalType": "address",
@@ -2513,9 +1703,9 @@
             "type": "bool"
           },
           {
-            "internalType": "uint256",
-            "name": "asset",
-            "type": "uint256"
+            "internalType": "bytes32",
+            "name": "pair32",
+            "type": "bytes32"
           },
           {
             "internalType": "uint256",
@@ -2541,11 +1731,6 @@
         "internalType": "struct PriceData",
         "name": "_priceData",
         "type": "tuple"
-      },
-      {
-        "internalType": "address",
-        "name": "_trader",
-        "type": "address"
       }
     ],
     "name": "updateTpSl",

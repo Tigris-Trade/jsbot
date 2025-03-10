@@ -28,7 +28,7 @@ class App {
         let response = await fetch("https://pairs.tigris.trade/allPairs");
         let data = await response.json();
         this.pairs = Object.keys(data);
-        this.oracle = new Oracle(this.pairs.length);
+        this.oracle = new Oracle(this.pairs);
         // Get all positions and create a position manager for each one
         let openPositionsBigInt = await this.positionContract.openPositions();
         let openPositions = [];
@@ -167,18 +167,6 @@ class App {
         this.tradingEvents.on("error", async () => {
            console.log("EVENT ERROR");
         });
-    }
-
-    async processData(_asset) {
-        try {
-            let data = (await this.oracle.getPrices()).data[_asset];
-            if (data === undefined) {
-                return ["0x0000000000000000000000000000000000000000", true, "0x0000000000000000000000000000000000000000000000000000000000000000", 0, 0, 0, "0x"];
-            }
-            return data;
-        } catch {
-            return ["0x0000000000000000000000000000000000000000", true, "0x0000000000000000000000000000000000000000000000000000000000000000", 0, 0, 0, "0x"];
-        }
     }
 
     async sleep(seconds) {
