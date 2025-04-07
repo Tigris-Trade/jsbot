@@ -25,7 +25,7 @@ class App {
     }
 
     async start() {
-        let response = await fetch("https://pairs.tigris.trade/allPairs");
+        let response = await fetch("https://pairs.tigris.trade/api/trading-pairs-ui");
         let data = await response.json();
         this.pairs = Object.keys(data);
         this.oracle = new Oracle(this.pairs.length);
