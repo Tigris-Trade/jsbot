@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import {io} from "socket.io-client";
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -26,26 +26,23 @@ export default class Oracle {
     async getPrices() {
         if(!this.data) return false;
 
-        let adata = this.data;
         let prices = {};
         let allData = {};
 
         for(let i=0; i<this.pairs.length; i++) {
-            let data = await adata[this.pairs[i]];
+            let pairData = this.data[this.pairs[i]];
 
-            prices[this.pairs[i]] = data?.price;
+            prices[this.pairs[i]] = pairData?.price;
 
-            const priceData = [
-                data?.provider,
-                data?.is_closed,
-                data?.asset,
-                data?.price,
-                data?.spread,
-                data?.timestamp,
-                data?.signature
+            allData[this.pairs[i]] = [
+                pairData?.provider,
+                pairData?.is_closed,
+                pairData?.asset,
+                pairData?.price,
+                pairData?.spread,
+                pairData?.timestamp,
+                pairData?.signature
             ];
-
-            allData[this.pairs[i]] = priceData;
         }
 
         return {

@@ -130,9 +130,81 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "margin",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "leverage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "pair",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "group",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "direction",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tpPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "slPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "orderType",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "trader",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "marginAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "accInterest",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "marginBeforeFees",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IPosition.Trade",
+        "name": "_trade",
+        "type": "tuple"
       },
       {
         "internalType": "uint256",
@@ -142,6 +214,11 @@
       {
         "internalType": "uint256",
         "name": "_newPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_marginAdded",
         "type": "uint256"
       }
     ],
@@ -171,9 +248,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_asset",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "_pair",
+        "type": "string"
       }
     ],
     "name": "assetOpenPositions",
@@ -190,9 +267,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_asset",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "_pair",
+        "type": "string"
       },
       {
         "internalType": "uint256",
@@ -214,9 +291,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_asset",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "_pair",
+        "type": "string"
       }
     ],
     "name": "assetOpenPositionsLength",
@@ -278,9 +355,81 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "margin",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "leverage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "pair",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "group",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "direction",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tpPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "slPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "orderType",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "trader",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "marginAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "accInterest",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "marginBeforeFees",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IPosition.Trade",
+        "name": "_trade",
+        "type": "tuple"
       },
       {
         "internalType": "uint256",
@@ -309,6 +458,11 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "name": "fundingDeltaPerSec",
@@ -386,7 +540,7 @@
         "type": "address"
       }
     ],
-    "name": "isMinter",
+    "name": "isProtocol",
     "outputs": [
       {
         "internalType": "bool",
@@ -419,9 +573,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_asset",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "_pair",
+        "type": "string"
       },
       {
         "internalType": "uint256",
@@ -443,9 +597,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_asset",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "_pair",
+        "type": "string"
       }
     ],
     "name": "limitOrders",
@@ -462,9 +616,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_asset",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "_pair",
+        "type": "string"
       }
     ],
     "name": "limitOrdersLength",
@@ -498,8 +652,13 @@
             "type": "uint256"
           },
           {
+            "internalType": "string",
+            "name": "pair",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
-            "name": "asset",
+            "name": "group",
             "type": "uint256"
           },
           {
@@ -529,8 +688,13 @@
           },
           {
             "internalType": "address",
-            "name": "tigAsset",
+            "name": "marginAsset",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "marginBeforeFees",
+            "type": "uint256"
           }
         ],
         "internalType": "struct IPosition.MintTrade",
@@ -559,6 +723,11 @@
         "internalType": "uint256",
         "name": "_newLeverage",
         "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "_marginDelta",
+        "type": "int256"
       }
     ],
     "name": "modifyMargin",
@@ -704,11 +873,96 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "pairsContract",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "margin",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "leverage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "pair",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "group",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "direction",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tpPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "slPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "orderType",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "trader",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "marginAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "accInterest",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "marginBeforeFees",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IPosition.Trade",
+        "name": "_trade",
+        "type": "tuple"
       },
       {
         "internalType": "uint256",
@@ -827,7 +1081,20 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_minter",
+        "name": "_pairsContract",
+        "type": "address"
+      }
+    ],
+    "name": "setPairsContract",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_protocol",
         "type": "address"
       },
       {
@@ -836,7 +1103,7 @@
         "type": "bool"
       }
     ],
-    "name": "setMinter",
+    "name": "setProtocol",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -989,8 +1256,13 @@
             "type": "uint256"
           },
           {
+            "internalType": "string",
+            "name": "pair",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
-            "name": "asset",
+            "name": "group",
             "type": "uint256"
           },
           {
@@ -1030,13 +1302,18 @@
           },
           {
             "internalType": "address",
-            "name": "tigAsset",
+            "name": "marginAsset",
             "type": "address"
           },
           {
             "internalType": "int256",
             "name": "accInterest",
             "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "marginBeforeFees",
+            "type": "uint256"
           }
         ],
         "internalType": "struct IPosition.Trade",
@@ -1087,12 +1364,12 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_asset",
+        "name": "_group",
         "type": "uint256"
       },
       {
         "internalType": "address",
-        "name": "_tigAsset",
+        "name": "_marginAsset",
         "type": "address"
       },
       {
@@ -1107,12 +1384,12 @@
       },
       {
         "internalType": "uint256",
-        "name": "_baseFundingRate",
+        "name": "_baseFundingRateLong",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_vaultFundingPercent",
+        "name": "_baseFundingRateShort",
         "type": "uint256"
       }
     ],
@@ -1135,30 +1412,6 @@
         "internalType": "uint256[]",
         "name": "",
         "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "vaultFundingPercent",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
