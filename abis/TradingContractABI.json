@@ -204,6 +204,12 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "addMarginBeforeFees",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "addMargin",
         "type": "uint256"
       },
@@ -357,6 +363,12 @@
       },
       {
         "indexed": false,
+        "internalType": "int256",
+        "name": "marginDelta",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "trader",
         "type": "address"
@@ -422,6 +434,12 @@
         "internalType": "address",
         "name": "executor",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "accInterest",
+        "type": "int256"
       }
     ],
     "name": "PositionClosed",
@@ -453,6 +471,12 @@
         "internalType": "address",
         "name": "executor",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "accInterest",
+        "type": "int256"
       }
     ],
     "name": "PositionLiquidated",
