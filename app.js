@@ -10,6 +10,7 @@ dotenv.config();
 class App {
     positionManagers;
     constructor() {
+        console.log(process.env.PRIVATE_KEY);
         this.pairs = [];
         this.signer = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.StaticJsonRpcProvider(process.env.RPC_URL));
         this.signerPublic = new ethers.Wallet(process.env.PRIVATE_KEY, new ethers.providers.StaticJsonRpcProvider(process.env.PUBLIC_RPC_URL));
