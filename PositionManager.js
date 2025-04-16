@@ -151,7 +151,7 @@ export default class PositionManager {
                             await this.tradingContract.executeLimitOrder(this.id, priceData, {gasPrice: gasPrice, gasLimit: process.env.GAS_LIMIT});
                             console.log("Successfully executed short limit order");
                         } catch(err) {
-                            // console.log(err.message);
+                            console.log(err.message);
                             console.log("Failed to execute short limit order ID " + this.id);
                         }
                     }

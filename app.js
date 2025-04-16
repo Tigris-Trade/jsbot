@@ -86,8 +86,9 @@ class App {
                 console.log("Position ID " + _id + " partially closed");
                 try {
                     await this.positionManagers[_id].getPositionData();
-                } catch {
+                } catch(e) {
                     console.log("Failed to update position data");
+                    console.log(e);
                 }
                 console.log(Object.keys(this.positionManagers));
             }
@@ -123,8 +124,9 @@ class App {
             console.log("Limit order ID " + _id + " executed");
             try {
                 await this.positionManagers[_id].getPositionData();
-            } catch {
+            } catch(e) {
                 console.log("Failed to update position data");
+                console.log(e);
             }
             console.log(Object.keys(this.positionManagers));
         });
@@ -135,8 +137,9 @@ class App {
             console.log("Cross margin on position ID " + _id);
             try {
                 await this.positionManagers[_id].getPositionData();
-            } catch {
+            } catch(e) {
                 console.log("Failed to update position data");
+                console.log(e);
             }
             console.log(Object.keys(this.positionManagers));
         });
@@ -147,8 +150,9 @@ class App {
             console.log("Position ID " + _id + " margin modified");
             try {
                 await this.positionManagers[_id].getPositionData();
-            } catch {
+            } catch(e) {
                 console.log("Failed to update position data");
+                console.log(e);
             }
             console.log(Object.keys(this.positionManagers));
         });
@@ -159,8 +163,9 @@ class App {
             console.log("Position " + _id + " TP/SL modified");
             try {
                 await this.positionManagers[_id].getPositionData();
-            } catch {
+            } catch(e) {
                 console.log("Failed to update position data");
+                console.log(e);
             }
             console.log(Object.keys(this.positionManagers));
         });
