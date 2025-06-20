@@ -18,12 +18,12 @@
       },
       {
         "internalType": "address",
-        "name": "_referrals",
+        "name": "_vault",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_vault",
+        "name": "_feesContract",
         "type": "address"
       }
     ],
@@ -310,6 +310,12 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "margin",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "marginBeforeFees",
         "type": "uint256"
       },
       {
@@ -818,6 +824,24 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_proxy",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_forwarder",
+        "type": "address"
+      }
+    ],
+    "name": "approveProxyCustom",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_id",
         "type": "uint256"
@@ -831,29 +855,6 @@
     "name": "cancelLimitOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "closeFees",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "daoFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "refDiscount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "botFees",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1016,6 +1017,25 @@
     "name": "executeLimitOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isTrustedForwarder",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1378,29 +1398,6 @@
   },
   {
     "inputs": [],
-    "name": "openFees",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "daoFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "refDiscount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "botFees",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "owner",
     "outputs": [
       {
@@ -1506,32 +1503,25 @@
   {
     "inputs": [
       {
-        "internalType": "bool",
-        "name": "_open",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_daoFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_refDiscount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_botFees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_percent",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "_forwarder",
+        "type": "address"
       }
     ],
-    "name": "setFees",
+    "name": "setDefaultTrustedForwarder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_feesContract",
+        "type": "address"
+      }
+    ],
+    "name": "setFeesContract",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -1633,6 +1623,11 @@
         "internalType": "address",
         "name": "_forwarder",
         "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_isActive",
+        "type": "bool"
       }
     ],
     "name": "setTrustedForwarder",
@@ -1649,6 +1644,19 @@
       }
     ],
     "name": "setVault",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_percent",
+        "type": "uint256"
+      }
+    ],
+    "name": "setVaultFundingPercent",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
